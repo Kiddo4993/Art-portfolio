@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 80">
+  <rect width="140" height="80" fill="#0d0c0a"/>
+
+  <!-- Dylan in Brush Script — cursive, large, flowing -->
+  <text
+    x="70" y="42"
+    font-family="'Brush Script MT', 'Snell Roundhand', 'Apple Chancery', cursive"
+    font-size="40"
+    fill="#f7f3ed"
+    text-anchor="middle"
+  >Dylan</text>
+
+  <!-- Duan — slightly smaller, spaced, same cursive -->
+  <text
+    x="70" y="70"
+    font-family="'Brush Script MT', 'Snell Roundhand', 'Apple Chancery', cursive"
+    font-size="28"
+    fill="#f7f3ed"
+    text-anchor="middle"
+    opacity="0.55"
+  >Duan</text>
+</svg>
