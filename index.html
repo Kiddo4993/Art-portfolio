@@ -1,652 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dylan Duan — Art</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&family=Inter:wght@300;400;600&display=swap"
-    rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset ─────────────────────────────────────── */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    :root {
-      --ink: #111010;
-      --cream: #f7f3ed;
-      --gold: #c9972a;
-      --silver: #9ca3af;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      background: var(--ink);
-      color: var(--cream);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ── HERO ───────────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 4rem 2rem;
-      position: relative;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(80, 60, 20, 0.35) 0%, transparent 70%),
-        var(--ink);
-    }
-
-    /* Subtle grain texture */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .hero-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.4rem;
-    }
-
-    .hero-name {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      font-weight: 700;
-      line-height: 0.92;
-      letter-spacing: -0.02em;
-      color: var(--cream);
-    }
-
-    .hero-name em {
-      font-style: italic;
-      font-weight: 400;
-      color: rgba(247, 243, 237, 0.55);
-    }
-
-    .hero-tagline {
-      margin-top: 2rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.25rem;
-      color: rgba(247, 243, 237, 0.5);
-      max-width: 480px;
+      background: #f9f6f1;
+      color: #1c1c1c;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
       line-height: 1.6;
     }
-
-    .hero-awards {
-      margin-top: 2.8rem;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .pill {
-      padding: 0.38rem 1rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .pill-gold {
-      border: 1px solid var(--gold);
-      color: var(--gold);
-    }
-
-    .pill-silver {
-      border: 1px solid var(--silver);
-      color: var(--silver);
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(247, 243, 237, 0.3);
-      animation: nudge 2.4s ease-in-out infinite;
-    }
-
-    .scroll-hint svg {
-      opacity: 0.4;
-    }
-
-    @keyframes nudge {
-
-      0%,
-      100% {
-        transform: translateX(-50%) translateY(0);
-      }
-
-      50% {
-        transform: translateX(-50%) translateY(6px);
-      }
-    }
-
-    /* ── SECTION LABEL ──────────────────────────────── */
-    .section-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(247, 243, 237, 0.3);
-      margin-bottom: 0.6rem;
-    }
-
-    /* ══════════════════════════════════════════════════
-       WORK 1 — LIFE AFTER-EFFECTS
-       Full-bleed ink/etching aesthetic
-    ══════════════════════════════════════════════════ */
-    .work-ink {
-      background: #0d0c0a;
-      padding: 6rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Crosshatch watermark */
-    .work-ink::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(247, 243, 237, 0.018) 28px, rgba(247, 243, 237, 0.018) 29px), repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(247, 243, 237, 0.018) 28px, rgba(247, 243, 237, 0.018) 29px);
-      pointer-events: none;
-    }
-
-    .work-inner {
-      max-width: 1200px;
+    header {
+      padding: 3rem 2rem 1.5rem;
+      max-width: 820px;
       margin: 0 auto;
-      padding: 0 2rem;
+      border-bottom: 1px solid #d8d0c4;
+    }
+    header h1 { font-size: 1.5rem; font-weight: 500; letter-spacing: 0.01em; }
+    header p { margin-top: 0.3rem; font-style: italic; color: #7a7065; font-size: 0.95rem; }
+    main { max-width: 820px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .work { margin-top: 5rem; }
+    .work img.painting { width: 100%; display: block; border-radius: 2px; }
+    .work-caption {
+      margin-top: 1.1rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 1rem;
     }
-
-    @media (max-width: 820px) {
-      .work-inner {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-    }
-
-    .work-img-wrap {
-      position: relative;
-    }
-
-    .work-img-wrap img {
-      width: 100%;
-      display: block;
-      border-radius: 2px;
-      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    .work-img-wrap:hover img {
-      transform: scale(1.02);
-    }
-
-    /* Ink frame */
-    .frame-ink {
-      box-shadow:
-        0 0 0 1px rgba(247, 243, 237, 0.12),
-        8px 8px 0 rgba(247, 243, 237, 0.07),
-        16px 16px 0 rgba(247, 243, 237, 0.03);
-    }
-
-    .work-text {
-      position: relative;
-      z-index: 1;
-    }
-
-    .work-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 6rem;
-      font-weight: 700;
-      line-height: 1;
-      color: rgba(247, 243, 237, 0.06);
-      position: absolute;
-      top: -2.5rem;
-      left: -1rem;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .work-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--cream);
-      margin-bottom: 0.5rem;
-    }
-
-    .work-title-ink {
-      color: #e8e0d0;
-    }
-
-    .work-medium {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(247, 243, 237, 0.35);
-      margin-bottom: 1.5rem;
-    }
-
-    .work-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.15rem;
-      line-height: 1.8;
-      color: rgba(247, 243, 237, 0.6);
-      margin-bottom: 2rem;
-    }
-
-    /* Award tag */
-    .award-tag {
-      display: inline-flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      border-left: 2px solid var(--silver);
-      padding-left: 1rem;
-    }
-
-    .award-tag-gold {
-      border-color: var(--gold);
-    }
-
-    .award-medal {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--cream);
-    }
-
-    .award-medal-gold {
-      color: var(--gold);
-    }
-
-    .award-where {
-      font-size: 0.8rem;
-      color: rgba(247, 243, 237, 0.45);
-    }
-
-    .award-when {
-      font-size: 0.72rem;
-      color: rgba(247, 243, 237, 0.28);
-      margin-top: 0.1rem;
-    }
-
+    .work-title { font-size: 1.15rem; font-weight: 500; }
+    .work-meta { font-size: 0.88rem; color: #7a7065; font-style: italic; margin-top: 0.15rem; }
+    .work-desc { margin-top: 0.8rem; font-size: 1rem; color: #3e3830; max-width: 560px; }
+    .award { text-align: right; font-size: 0.82rem; color: #7a7065; white-space: nowrap; padding-top: 0.1rem; }
+    .award strong { display: block; color: #1c1c1c; font-weight: 500; font-size: 0.88rem; }
     .cert-toggle {
-      display: inline-block;
-      margin-top: 1.6rem;
-      background: none;
-      border: 1px solid rgba(247, 243, 237, 0.2);
-      color: rgba(247, 243, 237, 0.5);
-      padding: 0.45rem 1.1rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
+      background: none; border: none; padding: 0; cursor: pointer;
+      font-family: inherit; font-size: 0.85rem; font-style: italic;
+      color: #7a7065; text-decoration: underline; text-underline-offset: 3px;
+      margin-top: 0.9rem; display: inline-block;
     }
-
-    .cert-toggle:hover {
-      border-color: rgba(247, 243, 237, 0.5);
-      color: var(--cream);
-    }
-
-    .cert-panel {
-      margin-top: 1.2rem;
-    }
-
-    .cert-panel img {
-      width: 100%;
-      border-radius: 4px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-      opacity: 0.92;
-    }
-
-    /* Divider */
-    .divider {
-      max-width: 1200px;
-      margin: 0 auto;
-      border: none;
-      border-top: 1px solid rgba(247, 243, 237, 0.06);
-    }
-
-    /* ══════════════════════════════════════════════════
-       WORK 2 — STREET CORNER
-       Bold warm tones, pop energy
-    ══════════════════════════════════════════════════ */
-    .work-pop {
-      background: #0f0d08;
-      padding: 6rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Warm light bleed from painting colours */
-    .work-pop::after {
-      content: '';
-      position: absolute;
-      top: -10%;
-      right: -5%;
-      width: 55%;
-      height: 70%;
-      background: radial-gradient(ellipse, rgba(180, 90, 10, 0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .work-title-pop {
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      letter-spacing: 0.04em;
-      line-height: 0.95;
-      color: #e8691e;
-      margin-bottom: 0.5rem;
-    }
-
-    /* Pop frame */
-    .frame-pop {
-      border: 3px solid #e8691e;
-      box-shadow:
-        6px 6px 0 rgba(232, 105, 30, 0.3),
-        12px 12px 0 rgba(26, 58, 107, 0.25);
-    }
-
-    .award-tag-pop {
-      border-color: #e8691e;
-    }
-
-    .award-medal-pop {
-      color: #e8691e;
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 0.06em;
-      font-size: 1.1rem;
-    }
-
-    /* ══════════════════════════════════════════════════
-       WORK 3 — RECURRENCE
-       Cosmic, dark, starfield
-    ══════════════════════════════════════════════════ */
-    .work-cosmic {
-      background: #06060f;
-      padding: 6rem 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .work-cosmic::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        radial-gradient(1.5px 1.5px at 7% 18%, rgba(255, 255, 255, 0.55) 0%, transparent 100%),
-        radial-gradient(1px 1px at 22% 72%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
-        radial-gradient(2px 2px at 41% 38%, rgba(200, 220, 255, 0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 58% 85%, rgba(255, 255, 255, 0.35) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 74% 25%, rgba(255, 255, 255, 0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 88% 60%, rgba(200, 220, 255, 0.45) 0%, transparent 100%),
-        radial-gradient(2px 2px at 13% 90%, rgba(255, 255, 255, 0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 63% 12%, rgba(255, 255, 255, 0.6) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 93% 82%, rgba(200, 220, 255, 0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 33% 55%, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
-      pointer-events: none;
-      animation: starPulse 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes starPulse {
-      from {
-        opacity: 0.5;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    /* Gold glow behind cosmic image */
-    .work-cosmic::after {
-      content: '';
-      position: absolute;
-      top: 20%;
-      left: -5%;
-      width: 50%;
-      height: 60%;
-      background: radial-gradient(ellipse, rgba(100, 140, 255, 0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .work-title-cosmic {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 600;
-      line-height: 1.15;
-      color: #c8d8ff;
-      text-shadow: 0 0 40px rgba(100, 149, 237, 0.4);
-      margin-bottom: 0.5rem;
-    }
-
-    /* Frame for cosmic piece */
-    .frame-cosmic {
-      box-shadow:
-        0 0 0 1px rgba(150, 180, 255, 0.15),
-        0 0 40px rgba(100, 149, 237, 0.15),
-        0 0 80px rgba(100, 149, 237, 0.05);
-    }
-
-    /* Gold medal text */
-    .award-medal-gold-foil {
-      background: linear-gradient(90deg, #b8860b 0%, #ffd700 40%, #daa520 70%, #f9e07a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 700;
-      font-size: 1.05rem;
-    }
-
-    /* ── FOOTER ─────────────────────────────────────── */
-    footer {
-      padding: 3rem 2rem;
-      text-align: center;
-      background: var(--ink);
-      border-top: 1px solid rgba(247, 243, 237, 0.06);
-    }
-
-    footer p {
-      font-size: 0.78rem;
-      color: rgba(247, 243, 237, 0.22);
-      letter-spacing: 0.08em;
-    }
-
-    footer strong {
-      color: rgba(247, 243, 237, 0.5);
+    .cert-toggle:hover { color: #1c1c1c; }
+    .cert-panel { margin-top: 0.8rem; }
+    .cert-panel img { width: 100%; max-width: 480px; border-radius: 2px; box-shadow: 0 2px 16px rgba(0,0,0,0.12); }
+    .work + .work { border-top: 1px solid #d8d0c4; padding-top: 5rem; }
+    footer { max-width: 820px; margin: 0 auto; padding: 2rem; border-top: 1px solid #d8d0c4; font-size: 0.82rem; color: #a89e94; font-style: italic; }
+    @media (max-width: 560px) {
+      .work-caption { grid-template-columns: 1fr; }
+      .award { text-align: left; }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- ═══ HERO ═══════════════════════════════════════ -->
-  <section class="hero">
-    <p class="hero-eyebrow">Visual Art Portfolio</p>
-    <h1 class="hero-name">Dylan<br><em>Duan</em></h1>
-    <p class="hero-tagline">Ink, gouache, and mixed media — from dense black-and-white narratives to large-scale colour
-      compositions.</p>
-    <div class="hero-awards">
-      <span class="pill pill-gold">Gold Medal — Louvre, Paris 2026</span>
-      <span class="pill pill-silver">2× Silver Award — CICAF Toronto</span>
+  <header>
+    <h1>Dylan Duan</h1>
+    <p>Pen &amp; ink, gouache, mixed media</p>
+  </header>
+
+  <main>
+
+    <div class="work">
+      <img class="painting" src="Art/life-after-effects.jpg" alt="Life After-Effects" />
+      <div class="work-caption">
+        <div>
+          <div class="work-title">Life After-Effects</div>
+          <div class="work-meta">Pen &amp; ink on paper, no underdrawing, 2024</div>
+          <p class="work-desc">
+            I drew this entirely freehand — no pencil sketch underneath. It's about what comes after
+            something big falls apart: angels coming down, people still working, chaos mixed with hope.
+            I wanted every corner to have something happening.
+          </p>
+          <button class="cert-toggle" aria-expanded="false">See the certificate</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/2024.png" alt="Silver Award certificate, 22nd CICAF 2024" />
+          </div>
+        </div>
+        <div class="award">
+          <strong>Silver Award</strong>
+          22nd Canada International<br>Children's Art Festival<br>Toronto, August 2024
+        </div>
+      </div>
     </div>
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-        <path d="M8 1v14M2 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
+
+    <div class="work">
+      <img class="painting" src="Art/street-corner.JPG" alt="Street Corner" />
+      <div class="work-caption">
+        <div>
+          <div class="work-title">Street Corner</div>
+          <div class="work-meta">Gouache &amp; acrylic on canvas, 2025</div>
+          <p class="work-desc">
+            A businessman rushing past an old man sitting on steps — same corner, completely different worlds.
+            I painted the Shanghai skyline in the background because I wanted it to feel like
+            it could be any big city where that contrast exists.
+          </p>
+          <button class="cert-toggle" aria-expanded="false">See the certificate</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/2025.png" alt="Silver Award certificate, 23rd CICAF 2025" />
+          </div>
+        </div>
+        <div class="award">
+          <strong>Silver Award</strong>
+          23rd Canada International<br>Children's Art Festival<br>Toronto, August 2025
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- ═══ WORK 1 — LIFE AFTER-EFFECTS ═══════════════ -->
-  <section class="work-ink">
-    <div class="work-inner">
-
-      <div class="work-img-wrap">
-        <img class="frame-ink" src="Art/life-after-effects.jpg" alt="Life After-Effects — ink drawing by Dylan Duan" />
-      </div>
-
-      <div class="work-text">
-        <div class="work-num">01</div>
-        <p class="section-label">Ink on Paper</p>
-        <h2 class="work-title work-title-ink">Life After-Effects</h2>
-        <p class="work-medium">Pen &amp; Ink — No Underdrawing</p>
-        <p class="work-desc">
-          A sprawling composition imagining the turbulent aftermath — celestial figures descend
-          while the world below churns through labour, chaos, and hope. Every corner teems with
-          detail, drawn entirely freehand in pen and ink.
-        </p>
-        <div class="award-tag">
-          <span class="award-medal">🥈 Silver Award</span>
-          <span class="award-where">22nd Canada International Children's Art Festival</span>
-          <span class="award-where">City of Toronto · Ziona Zhou &amp; Councillor Nick Mantas</span>
-          <span class="award-when">August 2024</span>
+    <div class="work">
+      <img class="painting" src="Art/recurrence.JPG" alt="Recurrence Between Two Best Friends" />
+      <div class="work-caption">
+        <div>
+          <div class="work-title">Recurrence Between Two Best Friends</div>
+          <div class="work-meta">White ink &amp; gouache on black paper, 2025</div>
+          <p class="work-desc">
+            I drew a giant wolf made of constellation lines leaning down to a small person.
+            It's about a friendship that keeps coming back no matter how much time passes —
+            the kind that feels bigger than you can explain.
+          </p>
+          <button class="cert-toggle" aria-expanded="false">See the certificate</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/jan2026award.JPG" alt="Gold Medal certificate, Carrousel du Louvre 2026" />
+          </div>
         </div>
-        <button class="cert-toggle" aria-expanded="false">View Certificate</button>
-        <div class="cert-panel" hidden>
-          <img src="Art/2024.png" alt="Silver Award Certificate — Life After-Effects 2024" />
+        <div class="award">
+          <strong>Gold Medal</strong>
+          4th International Art Games<br>Carrousel du Louvre<br>Paris, January 2026
         </div>
       </div>
-
     </div>
-  </section>
 
-  <hr class="divider" />
+  </main>
 
-  <!-- ═══ WORK 2 — STREET CORNER ════════════════════ -->
-  <section class="work-pop">
-    <div class="work-inner" style="direction: rtl;">
-      <!-- reversed so image is on the right -->
-
-      <div class="work-img-wrap" style="direction: ltr;">
-        <img class="frame-pop" src="Art/street-corner.JPG" alt="Street Corner — gouache painting by Dylan Duan" />
-      </div>
-
-      <div class="work-text" style="direction: ltr;">
-        <div class="work-num">02</div>
-        <p class="section-label">Gouache &amp; Acrylic</p>
-        <h2 class="work-title work-title-pop">Street Corner</h2>
-        <p class="work-medium">Gouache &amp; Acrylic on Canvas</p>
-        <p class="work-desc">
-          A high-energy urban scene set against a glittering skyline at dusk. A rushing businessman,
-          a resting elder, papers flying — the painting captures the collision of pace and stillness
-          at a single city corner.
-        </p>
-        <div class="award-tag award-tag-pop">
-          <span class="award-medal award-medal-pop">★ Silver Award</span>
-          <span class="award-where">23rd Canada International Children's Art Festival</span>
-          <span class="award-where">City of Toronto · Ziona Zhou &amp; Councillor Nick Mantas</span>
-          <span class="award-when">August 2025</span>
-        </div>
-        <button class="cert-toggle" aria-expanded="false">View Certificate</button>
-        <div class="cert-panel" hidden>
-          <img src="Art/2025.png" alt="Silver Award Certificate — Street Corner 2025" />
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- ═══ WORK 3 — RECURRENCE ════════════════════════ -->
-  <section class="work-cosmic">
-    <div class="work-inner">
-
-      <div class="work-img-wrap">
-        <img class="frame-cosmic" src="Art/recurrence.JPG"
-          alt="Recurrence Between Two Best Friends — white ink on black paper by Dylan Duan" />
-      </div>
-
-      <div class="work-text">
-        <div class="work-num" style="color: rgba(200,216,255,0.05);">03</div>
-        <p class="section-label">White Ink on Black Paper</p>
-        <h2 class="work-title work-title-cosmic">Recurrence Between<br>Two Best Friends</h2>
-        <p class="work-medium">White Ink &amp; Gouache on Black Paper</p>
-        <p class="work-desc" style="color: rgba(200,216,255,0.55);">
-          A cosmic wolf composed of constellation lines and stardust faces a small solitary figure.
-          Drawn in white ink on deep black paper, the piece meditates on the cyclical nature
-          of friendship — vast, ancient, and quietly electric.
-        </p>
-        <div class="award-tag award-tag-gold">
-          <span class="award-medal award-medal-gold-foil">✦ Médaille d'Or — Gold Medal</span>
-          <span class="award-where" style="color: rgba(200,216,255,0.4);">4th International Art Games</span>
-          <span class="award-where" style="color: rgba(200,216,255,0.4);">Carrousel du Louvre, Paris · WFUCA /
-            ADEFC</span>
-          <span class="award-when" style="color: rgba(200,216,255,0.25);">January 2026</span>
-        </div>
-        <button class="cert-toggle" aria-expanded="false">View Certificate</button>
-        <div class="cert-panel" hidden>
-          <img src="Art/jan2026award.JPG"
-            alt="Gold Medal Certificate — Recurrence Between Two Best Friends, Louvre 2026" />
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══ FOOTER ══════════════════════════════════════ -->
-  <footer>
-    <p><strong>Dylan Duan</strong> &nbsp;·&nbsp; Ink · Gouache · Mixed Media &nbsp;·&nbsp; © 2026</p>
-  </footer>
+  <footer>dylanduancanada@gmail.com</footer>
 
   <script>
     document.querySelectorAll('.cert-toggle').forEach(btn => {
       btn.addEventListener('click', () => {
         const panel = btn.nextElementSibling;
-        const isOpen = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!isOpen));
-        panel.hidden = isOpen;
-        btn.textContent = isOpen ? 'View Certificate' : 'Hide Certificate';
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        panel.hidden = open;
+        btn.textContent = open ? 'See the certificate' : 'Hide the certificate';
       });
     });
   </script>
 </body>
-
 </html>
