@@ -4,6 +4,18 @@ All notable changes to Dylan Duan's art portfolio are documented here.
 
 ---
 
+## [2026-04-05] — Prompt 4
+
+### Changed
+- Rebuilt `index.html` from scratch — much simpler, more personal design
+- Removed: ghost numbers, starfield animation, crosshatch backgrounds, grain texture, gold-foil gradients, scroll hint animation, pill badges, three different section background colors, three different fonts
+- Now uses a single font (EB Garamond), warm off-white background, one consistent layout throughout
+- Descriptions rewritten in first person from Dylan's perspective, not AI copywriter voice
+- Certificate toggle changed from a styled button to a plain underlined italic link
+- Footer simplified to just an email address
+
+---
+
 ## [2026-04-03] — Prompt 3
 
 ### Changed
