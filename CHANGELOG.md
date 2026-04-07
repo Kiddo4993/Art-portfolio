@@ -4,6 +4,18 @@ All notable changes to Dylan Duan's art portfolio are documented here.
 
 ---
 
+## [2026-04-07]
+
+### Changed
+- Redesigned portfolio for a more "non-AI" and human aesthetic.
+- Switched primary font to **EB Garamond** (elegant humanist serif).
+- Replaced the disparate "three-style" gallery with a consistent, warm parchment-like design.
+- Simplified the Hero to focus on Dylan's first-person artist statement.
+- Removed all "pill" badges and complex UI animations (including any scroll hints).
+- **Humanized Copy**: All descriptions rewritten to be in first-person without em dashes.
+
+---
+
 ## [2026-04-05] — Prompt 4
 
 ### Changed
