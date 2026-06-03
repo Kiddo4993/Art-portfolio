@@ -1,349 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dylan Duan · Art</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
-    /* ── Reset ─────────────────────────────────────── */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink: #1a1918;
       --paper: #f9f7f2;
-      --accent: #c9a050;
+      --ink:   #1a1918;
+      --gold:  #c9a050;
       --muted: #8c8882;
     }
 
+    html { scroll-behavior: auto; }
+
     body {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      line-height: 1.65;
+      overflow-x: hidden;
       background: var(--paper);
       color: var(--ink);
-      font-family: 'EB Garamond', serif;
-      font-size: 1.15rem;
-      line-height: 1.6;
-      overflow-x: hidden;
     }
 
-    /* ── HERO ───────────────────────────────────────── */
+    /* ── PROGRESS ─────────────────────────────── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--gold), #e8c87a);
+      z-index: 300; transform-origin: left;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
     .hero {
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 4rem 2rem;
-      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 4rem 2rem;
+      position: relative; background: var(--paper);
     }
 
     .hero-name {
-      font-size: clamp(3.5rem, 12vw, 9rem);
-      font-weight: 500;
-      line-height: 0.85;
-      letter-spacing: -0.03em;
-      margin-bottom: 2rem;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-tagline {
-      font-size: 1.4rem;
-      color: var(--muted);
-      max-width: 540px;
-      margin-bottom: 3rem;
-    }
-
-    .hero-awards {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
-
-    .award-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-    }
-
-    .award-item::before,
-    .award-item::after {
-      content: '·';
-      color: var(--accent);
-    }
-
-    /* ── GALLERY ────────────────────────────────────── */
-    .work-section {
-      padding: 8rem 0;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .work-inner {
-      padding: 0 2rem;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 6rem;
-      align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .work-inner {
-        grid-template-columns: 1fr;
-        gap: 4rem;
-      }
-    }
-
-    .work-img-wrap {
-      position: relative;
-    }
-
-    .work-img-wrap img {
-      width: 100%;
-      display: block;
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 20px 50px rgba(26, 25, 24, 0.08);
-    }
-
-    .work-img-wrap:hover img {
-      transform: scale(1.015);
-    }
-
-    .work-text {
-      position: relative;
-    }
-
-    .section-label {
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .work-title {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 500;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-    }
-
-    .work-medium {
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--muted);
-      margin-bottom: 2rem;
-    }
-
-    .work-desc {
-      font-size: 1.25rem;
-      color: var(--ink);
+      font-size: clamp(4.5rem, 14vw, 11rem);
+      font-weight: 500; line-height: 0.88;
       margin-bottom: 2.5rem;
     }
 
-    .award-tag {
-      border-top: 1px solid rgba(26, 25, 24, 0.08);
-      padding-top: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
+    .hero-first,
+    .hero-last { display: block; overflow: hidden; }
+
+    .hero-first-inner,
+    .hero-last-inner { display: block; }
+
+    .hero-last-inner { font-style: italic; color: var(--gold); }
+
+    .hero-tagline {
+      font-size: 1.25rem; color: var(--muted);
+      max-width: 480px; margin-bottom: 2.5rem;
     }
 
-    /* Frame for artistic touch */
-    .frame-simple {
-      padding: 1rem;
-      background: var(--paper);
-      border: 1px solid rgba(26, 25, 24, 0.05);
+    .hero-awards {
+      display: flex; flex-direction: column; gap: 0.4rem;
+      font-size: 0.8rem; text-transform: uppercase;
+      letter-spacing: 0.13em; color: var(--muted);
+    }
+    .award-item::before,
+    .award-item::after { content: '·'; color: var(--gold); margin: 0 0.5em; }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem;
+      color: var(--muted); font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: linePulse 2s ease-in-out infinite;
+    }
+    @keyframes linePulse {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50%       { opacity: 0.3; transform: scaleY(0.45); }
     }
 
-    .cert-link {
-      display: inline-block;
-      margin-top: 1.5rem;
-      color: var(--muted);
-      text-decoration: none;
-      font-style: italic;
-      font-size: 0.9rem;
-      border-bottom: 1px solid rgba(140, 136, 130, 0.3);
-      transition: color 0.2s, border-color 0.2s;
-      cursor: pointer;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      padding: 0;
-      font-family: inherit;
+    /* ── WORK SECTIONS ────────────────────────── */
+    .work-section {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 7rem 5vw;
+      position: relative; overflow: hidden;
     }
 
-    .cert-link:hover {
-      color: var(--ink);
-      border-color: var(--ink);
+    /* Per-section atmosphere */
+    .s-ink   { background: #ece8df; color: var(--ink); }
+    .s-dusk  { background: #13100c; color: #f2e4c6; }
+    .s-space { background: #060a17; color: #dde5f8; }
+
+    /* Hatching on ink section */
+    .s-ink::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(
+        0deg, transparent, transparent 28px,
+        rgba(26,25,24,0.022) 28px, rgba(26,25,24,0.022) 29px
+      );
     }
 
-    .cert-panel {
-      margin-top: 1.5rem;
+    /* Warm glow on dusk section */
+    .s-dusk::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 35% at 25% 65%, rgba(200,110,20,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 25% at 75% 35%, rgba(210,140,40,0.07) 0%, transparent 60%);
     }
 
-    .cert-panel img {
-      width: 100%;
-      border-radius: 2px;
-      opacity: 0.95;
+    /* ── SECTION INNER GRID ───────────────────── */
+    .section-inner {
+      max-width: 1280px; width: 100%; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5.5rem; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .section-inner.flip { direction: rtl; }
+    .section-inner.flip > * { direction: ltr; }
+
+    @media (max-width: 900px) {
+      .section-inner,
+      .section-inner.flip { grid-template-columns: 1fr; direction: ltr; }
     }
 
-    /* ── FOOTER ─────────────────────────────────────── */
+    /* Section counter */
+    .section-num {
+      position: absolute; top: 2.5rem; right: 2.5rem;
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      font-weight: 500; opacity: 0.2;
+    }
+
+    /* ── IMAGE FRAME ──────────────────────────── */
+    .art-wrap { position: relative; will-change: transform; }
+
+    .art-frame {
+      position: relative; overflow: hidden;
+    }
+    .art-frame img { width: 100%; display: block; }
+
+    .s-ink .art-frame {
+      padding: 1.2rem; background: #fff;
+      box-shadow: 0 24px 64px rgba(26,25,24,0.14), 0 4px 12px rgba(26,25,24,0.07);
+    }
+    .s-dusk .art-frame {
+      padding: 0.7rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,160,80,0.18);
+      box-shadow: 0 0 60px rgba(180,100,20,0.14), 0 24px 80px rgba(0,0,0,0.55);
+    }
+    .s-space .art-frame {
+      padding: 0.7rem;
+      background: rgba(10,15,40,0.5);
+      border: 1px solid rgba(140,170,255,0.1);
+      box-shadow: 0 0 100px rgba(80,120,255,0.08), 0 24px 60px rgba(0,0,0,0.7);
+    }
+
+    /* Reveal mask — sits on top of the image, gets animated away */
+    .reveal-mask {
+      position: absolute; inset: 0; z-index: 2;
+      pointer-events: none;
+    }
+    .s-ink .reveal-mask   { background: #ece8df; }
+    .s-dusk .reveal-mask  { background: #13100c; }
+
+    /* ── TEXT SIDE ────────────────────────────── */
+    .art-text { position: relative; }
+
+    .section-label {
+      font-size: 0.78rem; letter-spacing: 0.22em;
+      text-transform: uppercase; margin-bottom: 1.2rem;
+      display: block;
+    }
+    .s-ink .section-label   { color: var(--gold); }
+    .s-dusk .section-label  { color: #d49840; }
+    .s-space .section-label { color: #8ab0ff; }
+
+    .art-title {
+      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+      font-weight: 500; line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+    .t-clip { display: block; overflow: hidden; }
+    .t-clip-inner { display: block; }
+
+    .art-medium {
+      font-size: 1rem; font-style: italic;
+      margin-bottom: 2rem;
+    }
+    .s-ink .art-medium   { color: var(--muted); }
+    .s-dusk .art-medium  { color: rgba(242,228,200,0.55); }
+    .s-space .art-medium { color: rgba(200,215,255,0.55); }
+
+    .art-desc {
+      font-size: 1.2rem; line-height: 1.72;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── AWARD BLOCK ──────────────────────────── */
+    .award-block { border-top: 1px solid; padding-top: 1.5rem; }
+    .s-ink .award-block   { border-color: rgba(26,25,24,0.1); }
+    .s-dusk .award-block  { border-color: rgba(242,228,200,0.1); }
+    .s-space .award-block { border-color: rgba(200,215,255,0.08); }
+
+    .award-grade {
+      font-size: 0.76rem; letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .s-ink .award-grade   { color: var(--gold); }
+    .s-dusk .award-grade  { color: #d49840; }
+    .s-space .award-grade { color: #ffe07a; }
+
+    .award-name { font-size: 1.05rem; font-style: italic; margin-bottom: 0.15rem; }
+    .award-venue { font-size: 0.88rem; opacity: 0.55; }
+
+    .cert-btn {
+      display: inline-block; margin-top: 1.2rem;
+      font-size: 0.86rem; font-style: italic;
+      font-family: inherit; background: none; border: none;
+      border-bottom: 1px solid; padding: 0; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .s-ink .cert-btn   { color: var(--muted); border-color: rgba(140,136,130,0.35); }
+    .s-dusk .cert-btn  { color: rgba(242,228,200,0.45); border-color: rgba(242,228,200,0.18); }
+    .s-space .cert-btn { color: rgba(200,215,255,0.45); border-color: rgba(200,215,255,0.15); }
+    .cert-btn:hover { opacity: 0.75; }
+
+    .cert-panel { margin-top: 1.2rem; overflow: hidden; }
+    .cert-panel img { width: 100%; border-radius: 2px; }
+
+    /* ── STAR CANVAS (cosmic section) ────────── */
+    #star-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; opacity: 0.65;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
     footer {
-      padding: 6rem 2rem;
-      text-align: center;
-      border-top: 1px solid rgba(26, 25, 24, 0.05);
+      padding: 6rem 2rem; text-align: center;
+      background: var(--paper);
+      border-top: 1px solid rgba(26,25,24,0.05);
+    }
+    footer p { font-size: 0.9rem; color: var(--muted); }
+    footer strong { color: var(--ink); font-weight: 500; }
+
+    /* ── DIVIDER ──────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,160,80,0.3), transparent);
     }
 
-    footer p {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
+    /* ── INITIAL ANIMATION STATES ─────────────── */
+    /* Set in JS so they degrade gracefully without JS */
 
-    footer strong {
-      color: var(--ink);
-      font-weight: 500;
+    /* ── REDUCED MOTION ───────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-first-inner, .hero-last-inner,
+      .t-clip-inner { transform: none !important; }
+      .hero-tagline, .hero-awards, .scroll-hint,
+      .section-label, .art-medium, .art-desc,
+      .award-block, footer { opacity: 1 !important; transform: none !important; }
+      .scroll-line { animation: none; }
+      .reveal-mask { display: none !important; }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- ═══ HERO ═══════════════════════════════════════ -->
+  <div id="progress-bar"></div>
+
+  <!-- ═══ HERO ═══════════════════════════════════ -->
   <section class="hero">
-    <h1 class="hero-name">Dylan <em>Duan</em></h1>
+    <h1 class="hero-name">
+      <span class="hero-first"><span class="hero-first-inner">Dylan</span></span>
+      <span class="hero-last"><span class="hero-last-inner">Duan</span></span>
+    </h1>
     <p class="hero-tagline">I'm an artist working with ink, gouache, and mixed media. I love drawing highly detailed black-and-white scenes and painting big, vibrant pieces.</p>
     <div class="hero-awards">
       <div class="award-item">Gold Medal · Louvre, Paris 2026</div>
       <div class="award-item">2× Silver Award · CICAF Toronto</div>
     </div>
+    <div class="scroll-hint" id="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
   </section>
 
-  <!-- ═══ WORK 1 — LIFE AFTER-EFFECTS ═══════════════ -->
-  <section class="work-section">
-    <div class="work-inner">
-      <div class="work-img-wrap">
-        <div class="frame-simple">
-          <img src="Art/life-after-effects.jpg" alt="Life After-Effects: ink drawing by Dylan Duan" />
+  <!-- ═══ WORK 1 — INK ════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="work-section s-ink" id="work1">
+    <span class="section-num">01 / 03</span>
+    <div class="section-inner">
+      <div class="art-wrap">
+        <div class="art-frame">
+          <div class="reveal-mask" id="mask1"></div>
+          <img src="Art/life-after-effects.jpg" alt="Life After-Effects — pen & ink, Dylan Duan" />
         </div>
       </div>
-      <div class="work-text">
+      <div class="art-text">
         <span class="section-label">Ink on Paper</span>
-        <h2 class="work-title">Life After-Effects</h2>
-        <p class="work-medium">Pen &amp; Ink · No Underdrawing</p>
-        <p class="work-desc">
-          I drew this whole thing freehand using just pen and ink. It's my take on a chaotic aftermath, with figures dropping into a busy, tumbling world. I wanted to pack as many tiny, hidden details into the background as I could.
-        </p>
-        <div class="award-tag">
-          <span class="award-medal">Silver Award</span>
-          <span class="award-details">22nd Canada International Children's Art Festival</span>
-          <span class="award-details">City of Toronto · August 2024</span>
-        </div>
-        <button class="cert-link" aria-expanded="false">View Certificate</button>
-        <div class="cert-panel" hidden>
-          <img src="Art/2024.png" alt="Silver Award Certificate: Life After-Effects 2024" />
+        <h2 class="art-title">
+          <span class="t-clip"><span class="t-clip-inner">Life</span></span>
+          <span class="t-clip"><span class="t-clip-inner">After-Effects</span></span>
+        </h2>
+        <p class="art-medium">Pen &amp; Ink · No Underdrawing</p>
+        <p class="art-desc">Drawn entirely freehand — no underdrawing, just pen and ink. My take on a chaotic aftermath: figures dropping into a busy, tumbling world. I packed as many tiny hidden details into the background as I could.</p>
+        <div class="award-block">
+          <div class="award-grade">Silver Award</div>
+          <div class="award-name">22nd Canada International Children's Art Festival</div>
+          <div class="award-venue">City of Toronto · August 2024</div>
+          <button class="cert-btn" aria-expanded="false">View Certificate →</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/2024.png" alt="Silver Award Certificate 2024" />
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ WORK 2 — STREET CORNER ════════════════════ -->
-  <section class="work-section">
-    <div class="work-inner" style="direction: rtl;">
-      <div class="work-img-wrap" style="direction: ltr;">
-        <div class="frame-simple">
-          <img src="Art/street-corner.JPG" alt="Street Corner: gouache painting by Dylan Duan" />
+  <!-- ═══ WORK 2 — DUSK ═══════════════════════════ -->
+  <section class="work-section s-dusk" id="work2">
+    <span class="section-num" style="color:rgba(242,228,200,0.2)">02 / 03</span>
+    <div class="section-inner flip">
+      <div class="art-wrap">
+        <div class="art-frame">
+          <div class="reveal-mask" id="mask2"></div>
+          <img src="Art/street-corner.JPG" alt="Street Corner — gouache painting, Dylan Duan" />
         </div>
       </div>
-      <div class="work-text" style="direction: ltr;">
+      <div class="art-text">
         <span class="section-label">Gouache &amp; Acrylic</span>
-        <h2 class="work-title">Street Corner</h2>
-        <p class="work-medium">Gouache &amp; Acrylic on Canvas</p>
-        <p class="work-desc">
-          This is a snapshot of an everyday street corner at dusk, painted with gouache and acrylic. I really wanted to show the contrast you see in the city: some people rushing around with papers flying, while others are just taking a breather.
-        </p>
-        <div class="award-tag">
-          <span class="award-medal">Silver Award</span>
-          <span class="award-details">23rd Canada International Children's Art Festival</span>
-          <span class="award-details">City of Toronto · August 2025</span>
-        </div>
-        <button class="cert-link" aria-expanded="false">View Certificate</button>
-        <div class="cert-panel" hidden>
-          <img src="Art/2025.png" alt="Silver Award Certificate: Street Corner 2025" />
+        <h2 class="art-title">
+          <span class="t-clip"><span class="t-clip-inner">Street</span></span>
+          <span class="t-clip"><span class="t-clip-inner">Corner</span></span>
+        </h2>
+        <p class="art-medium">Gouache &amp; Acrylic on Canvas</p>
+        <p class="art-desc">A snapshot of an everyday street corner at dusk. I wanted to capture the contrast in city life: some people rushing with papers flying, others just taking a breather — same moment, totally different worlds.</p>
+        <div class="award-block">
+          <div class="award-grade">Silver Award</div>
+          <div class="award-name">23rd Canada International Children's Art Festival</div>
+          <div class="award-venue">City of Toronto · August 2025</div>
+          <button class="cert-btn" aria-expanded="false">View Certificate →</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/2025.png" alt="Silver Award Certificate 2025" />
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ WORK 3 — RECURRENCE ════════════════════════ -->
-  <section class="work-section">
-    <div class="work-inner">
-      <div class="work-img-wrap">
-        <div class="frame-simple">
-          <img src="Art/recurrence.JPG" alt="Recurrence Between Two Best Friends: white ink on black paper by Dylan Duan" />
+  <!-- ═══ WORK 3 — COSMIC ══════════════════════════ -->
+  <section class="work-section s-space" id="work3">
+    <canvas id="star-canvas"></canvas>
+    <span class="section-num" style="color:rgba(200,215,255,0.18)">03 / 03</span>
+    <div class="section-inner">
+      <div class="art-wrap">
+        <div class="art-frame" id="frame3">
+          <img src="Art/recurrence.JPG" alt="Recurrence Between Two Best Friends — white ink on black paper, Dylan Duan" />
         </div>
       </div>
-      <div class="work-text">
+      <div class="art-text">
         <span class="section-label">White Ink on Black Paper</span>
-        <h2 class="work-title">Recurrence Between<br>Two Best Friends</h2>
-        <p class="work-medium">White Ink &amp; Gouache on Black Paper</p>
-        <p class="work-desc">
-          I used white ink on black paper to draw a giant wolf made of stars facing a small person. It's meant to show how long-term friendships can feel much bigger than us, about that deep, recurring connection between two best friends over a long time.
-        </p>
-        <div class="award-tag">
-          <span class="award-medal">Gold Medal</span>
-          <span class="award-details">4th International Art Games · Jan 2026</span>
-          <span class="award-details">Carrousel du Louvre, Paris · WFUCA / ADEFC</span>
-        </div>
-        <button class="cert-link" aria-expanded="false">View Certificate</button>
-        <div class="cert-panel" hidden>
-          <img src="Art/jan2026award.JPG" alt="Gold Medal Certificate: Recurrence Between Two Best Friends, Louvre 2026" />
+        <h2 class="art-title">
+          <span class="t-clip"><span class="t-clip-inner">Recurrence</span></span>
+          <span class="t-clip"><span class="t-clip-inner">Between Two</span></span>
+          <span class="t-clip"><span class="t-clip-inner">Best Friends</span></span>
+        </h2>
+        <p class="art-medium">White Ink &amp; Gouache on Black Paper</p>
+        <p class="art-desc">White ink on black paper — a giant wolf made of stars facing a small person. Long-term friendships can feel so much bigger than us. It's about that deep, recurring connection that keeps coming back over years.</p>
+        <div class="award-block">
+          <div class="award-grade">Gold Medal</div>
+          <div class="award-name">4th International Art Games</div>
+          <div class="award-venue">Carrousel du Louvre, Paris · January 2026 · WFUCA / ADEFC</div>
+          <button class="cert-btn" aria-expanded="false">View Certificate →</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/jan2026award.JPG" alt="Gold Medal Certificate — Louvre 2026" />
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ FOOTER ══════════════════════════════════════ -->
-  <footer>
+  <!-- ═══ FOOTER ═══════════════════════════════════ -->
+  <footer id="footer">
     <p><strong>Dylan Duan</strong> · Ink · Gouache · Mixed Media · © 2026</p>
   </footer>
 
   <script>
-    document.querySelectorAll('.cert-link').forEach(btn => {
+  (() => {
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Progress bar
+    const bar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      bar.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+    }, { passive: true });
+
+    // ── STAR CANVAS (cosmic section) ──────────────────
+    const sc = document.getElementById('star-canvas');
+    const sCtx = sc.getContext('2d');
+    let sW = 0, sH = 0;
+    const stars = Array.from({ length: 130 }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.3 + 0.2,
+      a: Math.random() * 0.55 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.007 + 0.002,
+    }));
+
+    function sizeStarCanvas() {
+      const sec = document.getElementById('work3');
+      sW = sc.width  = sec.offsetWidth;
+      sH = sc.height = sec.offsetHeight;
+    }
+    sizeStarCanvas();
+    new ResizeObserver(sizeStarCanvas).observe(document.getElementById('work3'));
+
+    function drawStars() {
+      sCtx.clearRect(0, 0, sW, sH);
+      for (const s of stars) {
+        s.phase += s.speed;
+        const a = s.a * (0.5 + 0.5 * Math.sin(s.phase));
+        sCtx.beginPath();
+        sCtx.arc(s.x * sW, s.y * sH, s.r, 0, Math.PI * 2);
+        sCtx.fillStyle = `rgba(200,220,255,${a})`;
+        sCtx.fill();
+      }
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+
+    if (rm) return; // ── skip all motion below ──
+
+    // ── SET INITIAL STATES (prevents invisible-name flash) ──
+    gsap.set(['.hero-first-inner', '.hero-last-inner'], { yPercent: 110 });
+    gsap.set(['.hero-tagline', '.hero-awards', '#scroll-hint'], { opacity: 0 });
+    gsap.set('.section-label', { opacity: 0, x: -14 });
+    gsap.set('.t-clip-inner', { yPercent: 108 });
+    gsap.set(['.art-medium', '.art-desc', '.award-block'], { opacity: 0 });
+    gsap.set('.art-desc', { y: 16 });
+    gsap.set('.award-block', { y: 12 });
+    gsap.set('#footer', { opacity: 0, y: 20 });
+
+    // ── HERO ENTRANCE ──────────────────────────────────
+    const ht = gsap.timeline({ delay: 0.2 });
+    ht.to('.hero-first-inner', { yPercent: 0, duration: 1.15, ease: 'power4.out' });
+    ht.to('.hero-last-inner',  { yPercent: 0, duration: 1.15, ease: 'power4.out' }, '-=0.88');
+    ht.to('.hero-tagline',  { opacity: 1, duration: 0.9, ease: 'power2.out' }, '-=0.5');
+    ht.to('.hero-awards',   { opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.5');
+    ht.to('#scroll-hint',   { opacity: 1, duration: 0.6 }, '-=0.2');
+
+    ScrollTrigger.create({
+      start: 80,
+      onEnter: () => gsap.to('#scroll-hint', { opacity: 0, duration: 0.4 }),
+    });
+
+    // ── WORK 1: INK WIPE — mask slides right (like ink spreading) ──
+    gsap.timeline({
+      scrollTrigger: { trigger: '#work1', start: 'top 68%', toggleActions: 'play none none none' }
+    })
+    .fromTo('#mask1',
+      { xPercent: 0 },
+      { xPercent: 101, duration: 1.35, ease: 'power3.inOut' }
+    )
+    .fromTo('#work1 .art-wrap',
+      { x: -28 },
+      { x: 0, duration: 1.35, ease: 'power3.out' },
+      0
+    );
+    revealText('#work1');
+
+    // ── WORK 2: CURTAIN DROP — mask slides down (city curtain rising) ──
+    gsap.timeline({
+      scrollTrigger: { trigger: '#work2', start: 'top 68%', toggleActions: 'play none none none' }
+    })
+    .fromTo('#mask2',
+      { yPercent: 0 },
+      { yPercent: 101, duration: 1.5, ease: 'expo.inOut' }
+    )
+    .fromTo('#work2 .art-wrap',
+      { scale: 0.965 },
+      { scale: 1, duration: 1.5, ease: 'expo.out' },
+      0
+    );
+    revealText('#work2');
+
+    // ── WORK 3: RADIAL BLOOM — expands from center like a star (fits the wolf-of-stars) ──
+    gsap.timeline({
+      scrollTrigger: { trigger: '#work3', start: 'top 68%', toggleActions: 'play none none none' }
+    })
+    .fromTo('#frame3',
+      { clipPath: 'circle(0% at 50% 50%)', opacity: 0 },
+      { clipPath: 'circle(150% at 50% 50%)', opacity: 1, duration: 1.8, ease: 'power2.out' }
+    )
+    .fromTo('#work3 .art-wrap',
+      { scale: 0.93 },
+      { scale: 1, duration: 1.8, ease: 'power3.out' },
+      0
+    );
+    revealText('#work3');
+
+    // ── PARALLAX (scroll scrub, image drifts slightly) ──
+    ['#work1', '#work2', '#work3'].forEach(id => {
+      gsap.fromTo(`${id} .art-wrap`,
+        { y: 28 },
+        {
+          y: -28, ease: 'none',
+          scrollTrigger: { trigger: id, start: 'top bottom', end: 'bottom top', scrub: 1.6 }
+        }
+      );
+    });
+
+    // ── FOOTER ────────────────────────────────────────
+    gsap.to('#footer', {
+      opacity: 1, y: 0, duration: 0.9, ease: 'power2.out',
+      scrollTrigger: { trigger: '#footer', start: 'top 90%' }
+    });
+
+    // ── SHARED TEXT REVEAL ────────────────────────────
+    function revealText(sectionId) {
+      const sec = document.querySelector(sectionId);
+      gsap.timeline({
+        scrollTrigger: { trigger: sec, start: 'top 62%', toggleActions: 'play none none none' }
+      })
+      .fromTo(sec.querySelector('.section-label'),
+        { opacity: 0, x: -14 },
+        { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' },
+        0.15
+      )
+      .to(sec.querySelectorAll('.t-clip-inner'),
+        { yPercent: 0, duration: 1.05, ease: 'power4.out', stagger: 0.09 },
+        0.1
+      )
+      .fromTo(sec.querySelector('.art-medium'),
+        { opacity: 0 },
+        { opacity: 1, duration: 0.65, ease: 'power2.out' },
+        0.5
+      )
+      .fromTo(sec.querySelector('.art-desc'),
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' },
+        0.65
+      )
+      .fromTo(sec.querySelector('.award-block'),
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+        0.82
+      );
+    }
+
+    // ── CERTIFICATE TOGGLE ────────────────────────────
+    document.querySelectorAll('.cert-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const panel = btn.nextElementSibling;
-        const isOpen = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!isOpen));
-        panel.hidden = isOpen;
-        btn.textContent = isOpen ? 'View Certificate' : 'Hide Certificate';
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        if (open) {
+          gsap.to(panel, {
+            height: 0, opacity: 0, duration: 0.32, ease: 'power2.in',
+            onComplete: () => { panel.hidden = true; panel.style.height = ''; }
+          });
+          btn.textContent = 'View Certificate →';
+        } else {
+          panel.hidden = false;
+          gsap.fromTo(panel,
+            { height: 0, opacity: 0 },
+            { height: panel.scrollHeight, opacity: 1, duration: 0.4, ease: 'power3.out',
+              onComplete: () => { panel.style.height = 'auto'; ScrollTrigger.refresh(); }
+            }
+          );
+          btn.textContent = 'Hide Certificate ↑';
+        }
       });
     });
+
+  })();
   </script>
 </body>
-
 </html>
