@@ -105,6 +105,33 @@
     .s-ink   { background: #ece8df; color: var(--ink); }
     .s-dusk  { background: #13100c; color: #f2e4c6; }
     .s-space { background: #060a17; color: #dde5f8; }
+    .s-frost { background: #1a1a1b; color: #e7e7e4; }
+    .s-glow  {
+      background: linear-gradient(180deg, #f6e4c2 0%, #f3dcc0 45%, #e6dcf2 100%);
+      color: #2b2240;
+    }
+
+    /* Pale sunbeams through bare branches on frost section */
+    .s-frost::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 40% at 50% -8%, rgba(255,255,255,0.13) 0%, transparent 70%),
+        conic-gradient(from 158deg at 50% -12%,
+          transparent 0deg, rgba(255,255,255,0.045) 5deg, transparent 10deg,
+          transparent 15deg, rgba(255,255,255,0.035) 20deg, transparent 26deg,
+          rgba(255,255,255,0.05) 31deg, transparent 37deg, transparent 44deg);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+              mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+    }
+
+    /* Golden backlight, teal canopy and violet snow-shadow on glow section */
+    .s-glow::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 50% 40% at 70% 25%, rgba(255,186,70,0.38) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 30% at 6% 8%, rgba(40,170,170,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 35% at 30% 100%, rgba(150,120,230,0.22) 0%, transparent 70%);
+    }
 
     /* Hatching on ink section */
     .s-ink::before {
@@ -169,6 +196,16 @@
       border: 1px solid rgba(140,170,255,0.1);
       box-shadow: 0 0 100px rgba(80,120,255,0.08), 0 24px 60px rgba(0,0,0,0.7);
     }
+    .s-frost .art-frame {
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(230,232,235,0.14);
+      box-shadow: 0 0 80px rgba(220,225,235,0.08), 0 24px 70px rgba(0,0,0,0.6);
+    }
+    .s-glow .art-frame {
+      padding: 1rem; background: #fffaf0;
+      box-shadow: 0 0 90px rgba(240,170,60,0.28), 0 30px 70px rgba(90,50,120,0.18);
+    }
 
     /* Reveal mask — sits on top of the image, gets animated away */
     .reveal-mask {
@@ -189,6 +226,8 @@
     .s-ink .section-label   { color: var(--gold); }
     .s-dusk .section-label  { color: #d49840; }
     .s-space .section-label { color: #8ab0ff; }
+    .s-frost .section-label { color: #b9c0c8; }
+    .s-glow .section-label  { color: #17707a; }
 
     .art-title {
       font-size: clamp(2.8rem, 4.5vw, 4.2rem);
@@ -205,6 +244,8 @@
     .s-ink .art-medium   { color: var(--muted); }
     .s-dusk .art-medium  { color: rgba(242,228,200,0.55); }
     .s-space .art-medium { color: rgba(200,215,255,0.55); }
+    .s-frost .art-medium { color: rgba(231,231,228,0.55); }
+    .s-glow .art-medium  { color: rgba(43,34,64,0.6); }
 
     .art-desc {
       font-size: 1.2rem; line-height: 1.72;
@@ -216,6 +257,8 @@
     .s-ink .award-block   { border-color: rgba(26,25,24,0.1); }
     .s-dusk .award-block  { border-color: rgba(242,228,200,0.1); }
     .s-space .award-block { border-color: rgba(200,215,255,0.08); }
+    .s-frost .award-block { border-color: rgba(231,231,228,0.1); }
+    .s-glow .award-block  { border-color: rgba(43,34,64,0.12); }
 
     .award-grade {
       font-size: 0.76rem; letter-spacing: 0.2em;
@@ -225,6 +268,8 @@
     .s-ink .award-grade   { color: var(--gold); }
     .s-dusk .award-grade  { color: #d49840; }
     .s-space .award-grade { color: #ffe07a; }
+    .s-frost .award-grade { color: #c98a52; }
+    .s-glow .award-grade  { color: #8f520a; }
 
     .award-name { font-size: 1.05rem; font-style: italic; margin-bottom: 0.15rem; }
     .award-venue { font-size: 0.88rem; opacity: 0.55; }
@@ -239,6 +284,8 @@
     .s-ink .cert-btn   { color: var(--muted); border-color: rgba(140,136,130,0.35); }
     .s-dusk .cert-btn  { color: rgba(242,228,200,0.45); border-color: rgba(242,228,200,0.18); }
     .s-space .cert-btn { color: rgba(200,215,255,0.45); border-color: rgba(200,215,255,0.15); }
+    .s-frost .cert-btn { color: rgba(231,231,228,0.45); border-color: rgba(231,231,228,0.16); }
+    .s-glow .cert-btn  { color: rgba(43,34,64,0.6); border-color: rgba(43,34,64,0.22); }
     .cert-btn:hover { opacity: 0.75; }
 
     .cert-panel { margin-top: 1.2rem; overflow: hidden; }
@@ -249,6 +296,13 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       pointer-events: none; opacity: 0.65;
+    }
+
+    /* ── PARTICLE CANVASES (snow / light motes) ─ */
+    .fx-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
     }
 
     /* ── FOOTER ───────────────────────────────── */
@@ -294,7 +348,8 @@
     <p class="hero-tagline">I work in ink, gouache, and mixed media, drawn equally to the quiet precision of intricate black-and-white compositions and the expansive energy of bold, luminous color. My practice moves between meticulous detail and vibrant expression, exploring the dialogue between restraint and abundance.</p>
     <div class="hero-awards">
       <div class="award-item">Gold Medal · Louvre, Paris 2026</div>
-      <div class="award-item">2× Silver Award · CICAF Toronto</div>
+      <div class="award-item">First Prize · Youth World Cup Painting 2026</div>
+      <div class="award-item">2× Silver · Bronze · CICAF Toronto</div>
     </div>
     <div class="scroll-hint" id="scroll-hint">
       <span>Scroll</span>
@@ -305,7 +360,7 @@
   <!-- ═══ WORK 1 — INK ════════════════════════════ -->
   <div class="section-divider"></div>
   <section class="work-section s-ink" id="work1">
-    <span class="section-num">01 / 03</span>
+    <span class="section-num">01 / 05</span>
     <div class="section-inner">
       <div class="art-wrap">
         <div class="art-frame">
@@ -336,7 +391,7 @@
 
   <!-- ═══ WORK 2 — DUSK ═══════════════════════════ -->
   <section class="work-section s-dusk" id="work2">
-    <span class="section-num" style="color:rgba(242,228,200,0.2)">02 / 03</span>
+    <span class="section-num" style="color:rgba(242,228,200,0.2)">02 / 05</span>
     <div class="section-inner flip">
       <div class="art-wrap">
         <div class="art-frame">
@@ -368,7 +423,7 @@
   <!-- ═══ WORK 3 — COSMIC ══════════════════════════ -->
   <section class="work-section s-space" id="work3">
     <canvas id="star-canvas"></canvas>
-    <span class="section-num" style="color:rgba(200,215,255,0.18)">03 / 03</span>
+    <span class="section-num" style="color:rgba(200,215,255,0.18)">03 / 05</span>
     <div class="section-inner">
       <div class="art-wrap">
         <div class="art-frame" id="frame3">
@@ -391,6 +446,68 @@
           <button class="cert-btn" aria-expanded="false">View Certificate →</button>
           <div class="cert-panel" hidden>
             <img src="Art/jan2026award.JPG" alt="Gold Medal Certificate — Louvre 2026" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WORK 4 — FROST ═══════════════════════════ -->
+  <section class="work-section s-frost" id="work4">
+    <canvas class="fx-canvas" id="snow-canvas"></canvas>
+    <span class="section-num" style="color:rgba(231,231,228,0.2)">04 / 05</span>
+    <div class="section-inner flip">
+      <div class="art-wrap">
+        <div class="art-frame" id="frame4">
+          <img src="Art/door-to-friendship.JPG" alt="A Door to Friendship — charcoal drawing of friends in a snowball fight beneath bare winter trees, Dylan Duan" />
+        </div>
+      </div>
+      <div class="art-text">
+        <span class="section-label">Charcoal on Paper</span>
+        <h2 class="art-title">
+          <span class="t-clip"><span class="t-clip-inner">A Door to</span></span>
+          <span class="t-clip"><span class="t-clip-inner">Friendship</span></span>
+        </h2>
+        <p class="art-medium">Charcoal &amp; White on Paper</p>
+        <p class="art-desc">A snowball fight in the bleakest part of a Canadian winter. The trees are bare and the colour has drained from the world, yet pale sunlight breaks through the branches and stretches long shadows across the path. Friends duck, laugh, and pull each other close — proof that even the coldest season can open a door to warmth.</p>
+        <div class="award-block">
+          <div class="award-grade">Bronze Award</div>
+          <div class="award-name">24th Canada International Children's Art Festival</div>
+          <div class="award-venue">City of Toronto · August 2026</div>
+          <button class="cert-btn" aria-expanded="false">View Certificate →</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/aug2026-bronze.jpg" alt="Bronze Award Certificate 2026" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WORK 5 — GLOW ════════════════════════════ -->
+  <section class="work-section s-glow" id="work5">
+    <canvas class="fx-canvas" id="mote-canvas"></canvas>
+    <span class="section-num" style="color:rgba(43,34,64,0.25)">05 / 05</span>
+    <div class="section-inner">
+      <div class="art-wrap">
+        <div class="art-frame" id="frame5">
+          <img src="Art/door-to-friendship-colour.JPG" alt="Friendship in Colour — acrylic painting of friends in a snowball fight under golden light, with a fox watching, Dylan Duan" />
+        </div>
+      </div>
+      <div class="art-text">
+        <span class="section-label">Acrylic on Canvas</span>
+        <h2 class="art-title">
+          <span class="t-clip"><span class="t-clip-inner">Friendship</span></span>
+          <span class="t-clip"><span class="t-clip-inner">in Colour</span></span>
+        </h2>
+        <p class="art-medium">Acrylic on Canvas</p>
+        <p class="art-desc">The same winter afternoon, reimagined in full colour. Golden light pours through teal leaves, the snow turns violet in the shadows, and every snowball bursts into a bright streak mid-throw. In the corner, a quiet fox watches the game unfold. Returning to the scene let me ask what one moment feels like when joy is allowed to be loud.</p>
+        <div class="award-block">
+          <div class="award-grade">First Prize</div>
+          <div class="award-name">14th Youth World Cup Painting Competition</div>
+          <div class="award-venue">In support of UNICEF Canada · August 2026</div>
+          <button class="cert-btn" aria-expanded="false">View Certificate →</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/aug2026-firstprize.jpg" alt="First Prize Certificate — 14th Youth World Cup Painting Competition 2026" />
           </div>
         </div>
       </div>
@@ -446,6 +563,86 @@
       requestAnimationFrame(drawStars);
     }
     drawStars();
+
+    // ── PARTICLE FIELDS (frost snow, glow motes) ──────
+    // Only animates while its section is on screen; draws one still frame under reduced motion.
+    function particleField(sectionId, canvasId, count, spawn, step, paint) {
+      const sec = document.getElementById(sectionId);
+      const cv  = document.getElementById(canvasId);
+      const ctx = cv.getContext('2d');
+      const ps  = Array.from({ length: count }, spawn);
+      let w = 0, h = 0, onScreen = false, running = false;
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        for (const p of ps) paint(ctx, p, w, h);
+      }
+      function frame() {
+        if (!onScreen) { running = false; return; }
+        for (const p of ps) step(p);
+        draw();
+        requestAnimationFrame(frame);
+      }
+      function size() {
+        w = cv.width  = sec.offsetWidth;
+        h = cv.height = sec.offsetHeight;
+        draw();
+      }
+      size();
+      new ResizeObserver(size).observe(sec);
+      if (rm) return;
+      new IntersectionObserver(([e]) => {
+        onScreen = e.isIntersecting;
+        if (onScreen && !running) { running = true; requestAnimationFrame(frame); }
+      }).observe(sec);
+    }
+
+    // Snow: slow fall with a gentle sideways sway
+    particleField('work4', 'snow-canvas', 110,
+      () => ({
+        x: Math.random(), y: Math.random(),
+        r: Math.random() * 1.8 + 0.5,
+        a: Math.random() * 0.5 + 0.25,
+        vy: Math.random() * 0.0012 + 0.0004,
+        phase: Math.random() * Math.PI * 2,
+      }),
+      p => {
+        p.y += p.vy;
+        p.phase += 0.012;
+        p.x += Math.sin(p.phase) * 0.00025;
+        if (p.y > 1.02) { p.y = -0.02; p.x = Math.random(); }
+      },
+      (ctx, p, w, h) => {
+        ctx.beginPath();
+        ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(240,242,246,${p.a})`;
+        ctx.fill();
+      }
+    );
+
+    // Motes: golden and teal flecks drifting upward through warm light
+    particleField('work5', 'mote-canvas', 60,
+      () => ({
+        x: Math.random(), y: Math.random(),
+        r: Math.random() * 2.4 + 0.8,
+        a: Math.random() * 0.45 + 0.2,
+        rgb: Math.random() < 0.72 ? '222,150,40' : '30,150,160',
+        vy: Math.random() * 0.0006 + 0.0002,
+        phase: Math.random() * Math.PI * 2,
+      }),
+      p => {
+        p.y -= p.vy;
+        p.phase += 0.01;
+        p.x += Math.sin(p.phase) * 0.0002;
+        if (p.y < -0.02) { p.y = 1.02; p.x = Math.random(); }
+      },
+      (ctx, p, w, h) => {
+        ctx.beginPath();
+        ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.rgb},${p.a * (0.6 + 0.4 * Math.sin(p.phase * 2))})`;
+        ctx.fill();
+      }
+    );
 
     if (rm) return; // ── skip all motion below ──
 
@@ -517,8 +714,44 @@
     );
     revealText('#work3');
 
+    // ── WORK 4: SNOW GLARE — overexposed blur settles into focus, like eyes adjusting to winter light ──
+    gsap.timeline({
+      scrollTrigger: { trigger: '#work4', start: 'top 68%', toggleActions: 'play none none none' }
+    })
+    .fromTo('#frame4',
+      { filter: 'blur(14px) brightness(2.4) contrast(0.55)', opacity: 0 },
+      { filter: 'blur(0px) brightness(1) contrast(1)', opacity: 1, duration: 2, ease: 'power2.out',
+        clearProps: 'filter' }
+    )
+    .fromTo('#work4 .art-wrap',
+      { scale: 1.04 },
+      { scale: 1, duration: 2.2, ease: 'power3.out' },
+      0
+    );
+    revealText('#work4');
+
+    // ── WORK 5: DOOR OPENING — frame parts from the centre, then colour floods into the grey ──
+    gsap.timeline({
+      scrollTrigger: { trigger: '#work5', start: 'top 68%', toggleActions: 'play none none none' }
+    })
+    .fromTo('#frame5',
+      { clipPath: 'inset(-15% 50% -15% 50%)' },
+      { clipPath: 'inset(-15% -15% -15% -15%)', duration: 1.4, ease: 'expo.inOut' }
+    )
+    .fromTo('#frame5 img',
+      { filter: 'grayscale(1) brightness(0.92)' },
+      { filter: 'grayscale(0) brightness(1)', duration: 1.6, ease: 'power2.inOut', clearProps: 'filter' },
+      0.75
+    )
+    .fromTo('#work5 .art-wrap',
+      { scale: 0.96 },
+      { scale: 1, duration: 2, ease: 'power3.out' },
+      0
+    );
+    revealText('#work5');
+
     // ── PARALLAX (scroll scrub, image drifts slightly) ──
-    ['#work1', '#work2', '#work3'].forEach(id => {
+    ['#work1', '#work2', '#work3', '#work4', '#work5'].forEach(id => {
       gsap.fromTo(`${id} .art-wrap`,
         { y: 28 },
         {
