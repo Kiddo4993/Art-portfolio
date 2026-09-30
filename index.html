@@ -99,7 +99,17 @@
     .hero-first-inner,
     .hero-last-inner { display: block; }
 
-    .hero-last-inner { font-style: italic; color: var(--graphite); }
+    /* Same gold → coral → violet gradient as favicon.svg */
+    .hero-last-inner {
+      display: inline-block;
+      padding-right: 0.08em;
+      font-style: italic;
+      color: #e25a45;
+      background: linear-gradient(to bottom right, #f2b33d 0%, #e25a45 55%, #8a63e6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
     .hero-tagline {
       font-size: 1.08rem; line-height: 1.6; color: var(--muted);
