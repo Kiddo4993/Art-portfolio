@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dylan Duan · Art</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" href="favicon.ico?v=2" sizes="32x32" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -20,6 +22,7 @@
       --ink:   #1a1918;
       --gold:  #c9a050;
       --muted: #8c8882;
+      --graphite: #66625d;
       --gutter: 1.25rem;
     }
     @media (min-width: 768px) { :root { --gutter: 6vw; } }
@@ -57,6 +60,30 @@
     }
     @media (min-width: 768px) { .hero { padding: 4rem 2rem; } }
 
+    /* Frame trail: small framed prints of the artworks drop along the cursor's path.
+       Greyscale keeps the hero monotone whatever the source palette. */
+    #hero-trail {
+      position: absolute; inset: 0;
+      overflow: hidden; pointer-events: none;
+    }
+    .trail-frame {
+      position: absolute; left: 0; top: 0;
+      width: clamp(64px, 8vw, 112px);
+      padding: 5px;                               /* the mat */
+      background: #fffdf8;
+      box-shadow:
+        0 0 0 3px #2a2724,                        /* moulding */
+        0 12px 18px -8px rgba(26,25,24,0.45);     /* hung on the wall */
+      will-change: transform, opacity;
+    }
+    @media (min-width: 768px) { .trail-frame { padding: 6px; } }
+    .trail-frame img {
+      display: block; width: 100%; height: auto;
+      filter: grayscale(1);
+      outline: 1px solid rgba(201,160,80,0.7);    /* gilt fillet */
+    }
+    .hero-name, .hero-tagline, .hero-awards { position: relative; z-index: 1; }
+
     .hero-name {
       font-size: clamp(4rem, 22vw, 11rem);
       font-weight: 500; line-height: 0.88;
@@ -72,7 +99,7 @@
     .hero-first-inner,
     .hero-last-inner { display: block; }
 
-    .hero-last-inner { font-style: italic; color: var(--gold); }
+    .hero-last-inner { font-style: italic; color: var(--graphite); }
 
     .hero-tagline {
       font-size: 1.08rem; line-height: 1.6; color: var(--muted);
@@ -92,7 +119,7 @@
     @media (min-width: 640px) {
       .hero-awards { gap: 0.4rem; font-size: 0.8rem; letter-spacing: 0.13em; max-width: none; }
       .award-item::before,
-      .award-item::after { content: '·'; color: var(--gold); margin: 0 0.5em; }
+      .award-item::after { content: '·'; color: var(--graphite); margin: 0 0.5em; }
     }
 
     .scroll-hint {
@@ -102,11 +129,12 @@
       align-items: center; gap: 0.5rem;
       color: var(--muted); font-size: 0.72rem;
       letter-spacing: 0.18em; text-transform: uppercase;
+      z-index: 1;
     }
     @media (min-width: 768px) { .scroll-hint { bottom: 2.5rem; } }
     .scroll-line {
       width: 1px; height: 40px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
+      background: linear-gradient(to bottom, var(--graphite), transparent);
       animation: linePulse 2s ease-in-out infinite;
     }
     @keyframes linePulse {
@@ -408,7 +436,8 @@
   <div id="progress-bar"></div>
 
   <!-- ═══ HERO ═══════════════════════════════════ -->
-  <section class="hero">
+  <section class="hero" id="hero">
+    <div id="hero-trail" aria-hidden="true"></div>
     <h1 class="hero-name">
       <span class="hero-first"><span class="hero-first-inner">Dylan</span></span>
       <span class="hero-last"><span class="hero-last-inner">Duan</span></span>
@@ -715,6 +744,107 @@
         ctx.fill();
       }
     );
+
+    // ── HERO FRAME TRAIL ─────────────────────────────
+    // Moving across the hero drops small framed prints of the artworks along the
+    // cursor's path, one piece after another. Each lands at a slight tilt, hangs
+    // for a moment, then drops away and fades as if lifted off the wall.
+    (() => {
+      const hero  = document.getElementById('hero');
+      const layer = document.getElementById('hero-trail');
+      const SOURCES = [
+        'Art/life-after-effects.jpg',
+        'Art/street-corner.JPG',
+        'Art/recurrence.JPG',
+        'Art/door-to-friendship.JPG',
+        'Art/door-to-friendship-colour.JPG',
+      ];
+      const TILT = 7;          // max degrees either way a frame hangs off-true
+      const HOLD = 0.9;        // s a frame hangs before it leaves
+      const MAX  = 10;         // frames on screen at once; the oldest leaves early
+      const UNDER_COPY = 0.18; // frames behind the tagline/awards stay faint for legibility
+      SOURCES.forEach(src => { new Image().src = src; }); // warm the cache so frames never land empty
+      const copy = [document.querySelector('.hero-tagline'), document.querySelector('.hero-awards')];
+      const live = [];
+      let next = 0, last = null, spacing = 80, quiet = null;
+
+      // Trail spacing scales with the hero; the quiet zone is the box around the small type
+      function measure() {
+        const hr = hero.getBoundingClientRect();
+        const rs = copy.map(el => el.getBoundingClientRect());
+        quiet = {
+          x0: Math.min(...rs.map(r => r.left))   - hr.left - 8,
+          y0: Math.min(...rs.map(r => r.top))    - hr.top  - 8,
+          x1: Math.max(...rs.map(r => r.right))  - hr.left + 8,
+          y1: Math.max(...rs.map(r => r.bottom)) - hr.top  + 8,
+        };
+        spacing = Math.max(56, Math.min(hr.width, hr.height) * 0.11);
+      }
+      measure();
+      document.fonts?.ready.then(measure);
+      new ResizeObserver(measure).observe(hero);
+
+      function drop(x, y) {
+        const el  = document.createElement('div');
+        const img = new Image();
+        el.className = 'trail-frame';
+        img.src = SOURCES[next]; img.alt = '';
+        next = (next + 1) % SOURCES.length;
+        el.appendChild(img);
+        layer.appendChild(el);
+
+        // Test the whole frame, not just its centre — a frame's edge can reach the type first
+        const hw = el.offsetWidth / 2, hh = el.offsetHeight / 2;
+        const inQuiet = x + hw > quiet.x0 && x - hw < quiet.x1 && y + hh > quiet.y0 && y - hh < quiet.y1;
+        const peak = inQuiet ? UNDER_COPY : 1;
+        const tilt = (Math.random() * 2 - 1) * TILT;
+        gsap.set(el, { x, y, xPercent: -50, yPercent: -50, rotation: tilt, transformOrigin: '50% 0%' });
+
+        const tl = gsap.timeline({
+          onComplete: () => { el.remove(); live.splice(live.indexOf(tl), 1); },
+        });
+        if (rm) {
+          tl.fromTo(el, { opacity: 0 }, { opacity: peak, duration: 0.2 })
+            .addLabel('out', `+=${HOLD}`)
+            .to(el, { opacity: 0, duration: 0.4 }, 'out');
+        } else {
+          // Swings in from the top edge like it's been hooked onto a nail, then settles
+          tl.fromTo(el,
+              { opacity: 0, scale: 0.7, rotation: tilt - Math.sign(tilt || 1) * 10 },
+              { opacity: peak, scale: 1, rotation: tilt, duration: 0.45, ease: 'back.out(1.8)' })
+            .addLabel('out', `+=${HOLD}`)
+            .to(el, { y: y + 28, opacity: 0, scale: 0.92, duration: 0.6, ease: 'power2.in' }, 'out');
+        }
+        live.push(tl);
+        // Too many on the wall: send the oldest one on its way now
+        if (live.length > MAX) {
+          const old = live[0];
+          if (old.time() < old.labels.out) old.seek('out');
+        }
+      }
+
+      function moveTo(clientX, clientY) {
+        const b = hero.getBoundingClientRect();
+        const x = clientX - b.left, y = clientY - b.top;
+        if (x < 0 || y < 0 || x > b.width || y > b.height) { last = null; return; }
+        if (last && Math.hypot(x - last.x, y - last.y) < spacing) return;
+        drop(x, y);
+        last = { x, y };
+      }
+
+      hero.addEventListener('pointermove', e => {
+        if (e.pointerType !== 'touch') moveTo(e.clientX, e.clientY);
+      });
+      hero.addEventListener('pointerleave', () => { last = null; });
+      // Passive touch listeners: the finger leaves a trail while the page still scrolls
+      hero.addEventListener('touchstart', e => {
+        last = null;
+        moveTo(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      hero.addEventListener('touchmove', e => {
+        moveTo(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+    })();
 
     if (rm) return; // ── skip all motion below ──
 
