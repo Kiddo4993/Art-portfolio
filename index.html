@@ -201,6 +201,33 @@
         radial-gradient(ellipse 55% 35% at 30% 100%, rgba(150,120,230,0.22) 0%, transparent 70%);
     }
 
+    /* Scholar's study: warm graphite, with the rings and degree ticks of an
+       astrolabe engraved faintly behind the drawing (echoes the one in the piece) */
+    .s-study { background: #1b1916; color: #ece4d4; }
+    .s-study::before,
+    .s-study::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      --cx: 82%; --cy: 38%;
+    }
+    @media (max-width: 899px) { .s-study::before, .s-study::after { --cx: 70%; --cy: 22%; } }
+    .s-study::before {
+      background:
+        radial-gradient(circle at var(--cx) var(--cy), rgba(214,170,100,0.10) 0%, transparent 38%),
+        repeating-radial-gradient(circle at var(--cx) var(--cy),
+          transparent 0 58px, rgba(214,180,120,0.075) 58px 59px);
+      -webkit-mask-image: radial-gradient(circle at var(--cx) var(--cy), #000 0 22%, transparent 52%);
+              mask-image: radial-gradient(circle at var(--cx) var(--cy), #000 0 22%, transparent 52%);
+    }
+    .s-study::after {
+      background: repeating-conic-gradient(from 0deg at var(--cx) var(--cy),
+        rgba(214,180,120,0.09) 0deg 0.35deg, transparent 0.35deg 5deg);
+      /* Ticks only live in a thin band, like the degree scale on the rim */
+      -webkit-mask-image: radial-gradient(circle at var(--cx) var(--cy),
+        transparent 0 31%, #000 31.3% 33.5%, transparent 33.8%);
+              mask-image: radial-gradient(circle at var(--cx) var(--cy),
+        transparent 0 31%, #000 31.3% 33.5%, transparent 33.8%);
+    }
+
     /* Hatching on ink section */
     .s-ink::before {
       content: ''; position: absolute; inset: 0; pointer-events: none;
@@ -283,7 +310,46 @@
       padding: 0.55rem; background: #fffaf0;
       box-shadow: 0 0 90px rgba(240,170,60,0.28), 0 30px 70px rgba(90,50,120,0.18);
     }
+    /* A cream mat, the way a charcoal drawing would actually be hung */
+    .s-study .art-frame {
+      padding: 0.55rem; background: #f1ebdf;
+      box-shadow: 0 0 90px rgba(214,170,100,0.10), 0 28px 70px rgba(0,0,0,0.6);
+    }
+
+    /* Completing-the-square reveal: four tiles laid out like al-Khwarizmi's
+       proof of x² + 10x = 39 (x², two 5x strips, the missing 25 corner).
+       Hidden by default so the image is never covered without JS. */
+    .square-mask {
+      display: none; position: absolute; inset: 0; z-index: 2;
+      grid-template-columns: 62% 38%; grid-template-rows: 62% 38%;
+      pointer-events: none;
+    }
+    .sq {
+      display: grid; place-items: center;
+      background: #1b1916;
+      box-shadow: inset 0 0 0 0.5px rgba(214,180,120,0.35);
+      will-change: clip-path;
+    }
+    .sq-label {
+      font-style: italic; font-size: clamp(1.1rem, 3.4vw, 2.2rem);
+      color: rgba(236,228,212,0.6);
+    }
+    .sq-25 .sq-label { color: #e0b36a; }
+
+    /* The working, written out under the drawing */
+    .proof {
+      margin-top: 1rem; text-align: center;
+      font-style: italic; font-size: 0.98rem;
+      color: rgba(236,228,212,0.66);
+      font-variant-numeric: lining-nums;
+    }
+    .proof-step { display: inline-block; }
+    .proof-arrow { margin: 0 0.45em; color: rgba(214,180,120,0.55); }
+    .proof-step:last-child { color: #e0b36a; }
+    @media (min-width: 768px) { .proof { font-size: 1.05rem; } }
+
     @media (min-width: 768px) {
+      .s-study .art-frame { padding: 0.9rem; }
       .s-ink .art-frame   { padding: 1.2rem; }
       .s-dusk .art-frame,
       .s-space .art-frame { padding: 0.7rem; }
@@ -315,6 +381,7 @@
     .s-space .section-label { color: #8ab0ff; }
     .s-frost .section-label { color: #b9c0c8; }
     .s-glow .section-label  { color: #17707a; }
+    .s-study .section-label { color: #d6aa64; }
 
     .art-title {
       font-size: clamp(2.3rem, 11vw, 3.4rem);
@@ -340,6 +407,7 @@
     .s-space .art-medium { color: rgba(200,215,255,0.55); }
     .s-frost .art-medium { color: rgba(231,231,228,0.55); }
     .s-glow .art-medium  { color: rgba(43,34,64,0.6); }
+    .s-study .art-medium { color: rgba(236,228,212,0.55); }
 
     .art-desc {
       font-size: 1.08rem; line-height: 1.68;
@@ -357,6 +425,7 @@
     .s-space .award-block { border-color: rgba(200,215,255,0.08); }
     .s-frost .award-block { border-color: rgba(231,231,228,0.1); }
     .s-glow .award-block  { border-color: rgba(43,34,64,0.12); }
+    .s-study .award-block { border-color: rgba(236,228,212,0.1); }
 
     .award-grade {
       font-size: 0.76rem; letter-spacing: 0.2em;
@@ -368,6 +437,7 @@
     .s-space .award-grade { color: #ffe07a; }
     .s-frost .award-grade { color: #c98a52; }
     .s-glow .award-grade  { color: #8f520a; }
+    .s-study .award-grade { color: #e0b36a; }
 
     .award-name { font-size: 1.05rem; font-style: italic; margin-bottom: 0.15rem; }
     .award-venue { font-size: 0.88rem; opacity: 0.55; }
@@ -389,6 +459,7 @@
     .s-space .cert-btn { color: rgba(200,215,255,0.45); text-decoration-color: rgba(200,215,255,0.15); }
     .s-frost .cert-btn { color: rgba(231,231,228,0.45); text-decoration-color: rgba(231,231,228,0.16); }
     .s-glow .cert-btn  { color: rgba(43,34,64,0.6); text-decoration-color: rgba(43,34,64,0.22); }
+    .s-study .cert-btn { color: rgba(236,228,212,0.5); text-decoration-color: rgba(236,228,212,0.18); }
     .cert-btn:active { opacity: 0.6; }
     @media (hover: hover) { .cert-btn:hover { opacity: 0.75; } }
     .cert-btn:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
@@ -437,7 +508,8 @@
       .section-label, .art-medium, .art-desc,
       .award-block, footer { opacity: 1 !important; transform: none !important; }
       .scroll-line { animation: none; }
-      .reveal-mask { display: none !important; }
+      .reveal-mask, .square-mask { display: none !important; }
+      .proof-step { opacity: 1 !important; }
     }
   </style>
 </head>
@@ -457,6 +529,7 @@
       <div class="award-item">Gold Medal · Louvre, Paris 2026</div>
       <div class="award-item">First Prize · Youth World Cup Painting 2026</div>
       <div class="award-item">2× Silver · Bronze · CICAF Toronto</div>
+      <div class="award-item">Finalist · ArtEffect Unsung Heroes 2026</div>
     </div>
     <div class="scroll-hint" id="scroll-hint">
       <span>Scroll</span>
@@ -467,7 +540,7 @@
   <!-- ═══ WORK 1 — INK ════════════════════════════ -->
   <div class="section-divider"></div>
   <section class="work-section s-ink" id="work1">
-    <span class="section-num">01 / 05</span>
+    <span class="section-num">01 / 06</span>
     <div class="section-inner">
       <div class="art-wrap">
         <div class="art-frame">
@@ -498,7 +571,7 @@
 
   <!-- ═══ WORK 2 — DUSK ═══════════════════════════ -->
   <section class="work-section s-dusk" id="work2">
-    <span class="section-num" style="color:rgba(242,228,200,0.2)">02 / 05</span>
+    <span class="section-num" style="color:rgba(242,228,200,0.2)">02 / 06</span>
     <div class="section-inner flip">
       <div class="art-wrap">
         <div class="art-frame">
@@ -530,7 +603,7 @@
   <!-- ═══ WORK 3 — COSMIC ══════════════════════════ -->
   <section class="work-section s-space" id="work3">
     <canvas id="star-canvas"></canvas>
-    <span class="section-num" style="color:rgba(200,215,255,0.18)">03 / 05</span>
+    <span class="section-num" style="color:rgba(200,215,255,0.18)">03 / 06</span>
     <div class="section-inner">
       <div class="art-wrap">
         <div class="art-frame" id="frame3">
@@ -562,7 +635,7 @@
   <!-- ═══ WORK 4 — FROST ═══════════════════════════ -->
   <section class="work-section s-frost" id="work4">
     <canvas class="fx-canvas" id="snow-canvas"></canvas>
-    <span class="section-num" style="color:rgba(231,231,228,0.2)">04 / 05</span>
+    <span class="section-num" style="color:rgba(231,231,228,0.2)">04 / 06</span>
     <div class="section-inner flip">
       <div class="art-wrap">
         <div class="art-frame" id="frame4">
@@ -593,7 +666,7 @@
   <!-- ═══ WORK 5 — GLOW ════════════════════════════ -->
   <section class="work-section s-glow" id="work5">
     <canvas class="fx-canvas" id="mote-canvas"></canvas>
-    <span class="section-num" style="color:rgba(43,34,64,0.25)">05 / 05</span>
+    <span class="section-num" style="color:rgba(43,34,64,0.25)">05 / 06</span>
     <div class="section-inner">
       <div class="art-wrap">
         <div class="art-frame" id="frame5">
@@ -621,9 +694,48 @@
     </div>
   </section>
 
+  <!-- ═══ WORK 6 — STUDY ═══════════════════════════ -->
+  <section class="work-section s-study" id="work6">
+    <span class="section-num" style="color:rgba(236,228,212,0.2)">06 / 06</span>
+    <div class="section-inner flip">
+      <div class="art-wrap">
+        <div class="art-frame" id="frame6">
+          <div class="square-mask" id="square6" aria-hidden="true">
+            <div class="sq sq-x2"><span class="sq-label">x²</span></div>
+            <div class="sq sq-5a"><span class="sq-label">5x</span></div>
+            <div class="sq sq-5b"><span class="sq-label">5x</span></div>
+            <div class="sq sq-25"><span class="sq-label">25</span></div>
+          </div>
+          <img src="Art/al-khwarizmi.jpg" alt="The Legacy of al-Khwarizmi: charcoal drawing of the scholar in his study, surrounded by an armillary sphere, star charts, a map, Hindu-Arabic numerals and a book showing x² + 10x = 39 solved by completing the square, Dylan Duan" />
+        </div>
+        <p class="proof" aria-label="x squared plus 10x equals 39, so x plus 5 squared equals 64, so x equals 3">
+          <span class="proof-step">x² + 10x = 39</span><span class="proof-step"><span class="proof-arrow">→</span>(x + 5)² = 64</span><span class="proof-step"><span class="proof-arrow">→</span>x = 3</span>
+        </p>
+      </div>
+      <div class="art-text">
+        <span class="section-label">Charcoal on Paper</span>
+        <h2 class="art-title">
+          <span class="t-clip"><span class="t-clip-inner">The Legacy of</span></span>
+          <span class="t-clip"><span class="t-clip-inner">al-Khwarizmi</span></span>
+        </h2>
+        <p class="art-medium">Charcoal &amp; White on Paper · Unsung Heroes Project</p>
+        <p class="art-desc">Muhammad ibn Musa al-Khwarizmi worked in Baghdad's House of Wisdom more than a thousand years ago. His book Al-Jabr gave us the word "algebra," and his own name became "algorithm." I surrounded him with what he left behind: the numerals we still count with, his star tables, a map of the known world, and the equation x² + 10x = 39 solved by completing the square. Every student who solves for x is working in his shadow, yet almost nobody knows his name.</p>
+        <div class="award-block">
+          <div class="award-grade">Finalist</div>
+          <div class="award-name">ArtEffect · Innovation Generation 2026 Summer Competition</div>
+          <div class="award-venue">Lowell Milken Center for Unsung Heroes · Summer 2026</div>
+          <button class="cert-btn" aria-expanded="false">View Certificate →</button>
+          <div class="cert-panel" hidden>
+            <img src="Art/summer2026-arteffect-finalist.jpg" alt="ArtEffect Finalist Certificate, 2026 Summer Competition, Lowell Milken Center for Unsung Heroes" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ FOOTER ═══════════════════════════════════ -->
   <footer id="footer">
-    <p><strong>Dylan Duan</strong> · Ink · Gouache · Mixed Media · © 2026</p>
+    <p><strong>Dylan Duan</strong> · Ink · Gouache · Charcoal · Mixed Media · © 2026</p>
   </footer>
 
   <script>
@@ -768,6 +880,7 @@
         'Art/recurrence.JPG',
         'Art/door-to-friendship.JPG',
         'Art/door-to-friendship-colour.JPG',
+        'Art/al-khwarizmi.jpg',
       ];
       const TILT = 7;          // max degrees either way a frame hangs off-true
       const HOLD = 0.9;        // s a frame hangs before it leaves
@@ -867,6 +980,10 @@
     gsap.set('.art-desc', { y: 16 });
     gsap.set('.award-block', { y: 12 });
     gsap.set('#footer', { opacity: 0, y: 20 });
+    gsap.set('#square6', { display: 'grid' });
+    gsap.set('#square6 .sq', { clipPath: 'inset(0% 0% 0% 0%)' });
+    gsap.set('#square6 .sq-label', { opacity: 0 });
+    gsap.set('#work6 .proof-step', { opacity: 0 });
 
     // ── HERO ENTRANCE ──────────────────────────────────
     const ht = gsap.timeline({ delay: 0.2 });
@@ -962,9 +1079,34 @@
     );
     revealText('#work5');
 
+    // ── WORK 6: COMPLETING THE SQUARE — the drawing is uncovered the way
+    // al-Khwarizmi solved x² + 10x = 39: the x² square, then the two 5x strips,
+    // then a beat before the missing 25 corner completes it. Each tile folds
+    // away toward its own outer corner, so the motion grows out of the proof's
+    // geometry instead of a generic fade. ──
+    gsap.timeline({
+      scrollTrigger: { trigger: '#work6', start: 'top 68%', toggleActions: 'play none none none' },
+      onComplete: () => gsap.set('#square6', { display: 'none' }),
+    })
+    .to('#square6 .sq-label', { opacity: 1, duration: 0.35, ease: 'power2.out', stagger: 0.08 }, 0)
+    .to('#square6 .sq-x2', { clipPath: 'inset(0% 100% 100% 0%)', duration: 0.75, ease: 'expo.inOut' }, 0.5)
+    .to('#square6 .sq-5a', { clipPath: 'inset(0% 0% 0% 100%)', duration: 0.7, ease: 'expo.inOut' }, 0.95)
+    .to('#square6 .sq-5b', { clipPath: 'inset(100% 0% 0% 0%)', duration: 0.7, ease: 'expo.inOut' }, 0.95)
+    .fromTo('#square6 .sq-25 .sq-label',
+      { scale: 1 },
+      { scale: 1.25, duration: 0.3, ease: 'back.out(2)', yoyo: true, repeat: 1 }, 1.55)
+    .to('#square6 .sq-25', { clipPath: 'inset(100% 0% 0% 100%)', duration: 0.6, ease: 'expo.inOut' }, 2.05)
+    .to('#work6 .proof-step', { opacity: 1, duration: 0.5, ease: 'power2.out', stagger: 0.45 }, 1.0)
+    .fromTo('#work6 .art-wrap',
+      { scale: 0.97 },
+      { scale: 1, duration: 2.4, ease: 'power3.out' },
+      0
+    );
+    revealText('#work6');
+
     // ── PARALLAX (scroll scrub, image drifts slightly — gentler on phones) ──
     const drift = stacked ? 12 : 28;
-    ['#work1', '#work2', '#work3', '#work4', '#work5'].forEach(id => {
+    ['#work1', '#work2', '#work3', '#work4', '#work5', '#work6'].forEach(id => {
       gsap.fromTo(`${id} .art-wrap`,
         { y: drift },
         {

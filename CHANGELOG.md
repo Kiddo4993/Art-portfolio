@@ -4,6 +4,17 @@ All notable changes to Dylan Duan's art portfolio are documented here.
 
 ---
 
+## [2026-11-12]
+
+### Added
+- **Work 6: The Legacy of al-Khwarizmi** (charcoal), ArtEffect 2026 Summer Competition Finalist (Lowell Milken Center for Unsung Heroes).
+  - New `s-study` section: warm graphite with faint astrolabe rings and degree ticks behind the drawing; cream mat frame.
+  - Signature reveal "completing the square": the drawing is uncovered in the order of al-Khwarizmi's proof of x² + 10x = 39 (x², two 5x strips, then the 25 corner), with the working written out underneath.
+  - Assets: `Art/al-khwarizmi.jpg` (rotated upright, 1800px), `Art/summer2026-arteffect-finalist.jpg` (certificate rendered from PDF).
+- Hero awards line, hero frame trail, parallax and section counters (now `/ 06`) updated; footer lists charcoal.
+
+---
+
 ## [2026-04-07]
 
 ### Changed
